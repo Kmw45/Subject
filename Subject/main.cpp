@@ -19,7 +19,7 @@ int main(void)
 	int HPPotion = 5;
 	int MPPotion = 5;
 	int StatPotion = 5;
-
+	int play = 5;
 
 
 	while (1)
@@ -64,7 +64,7 @@ int main(void)
 	{
 		int Num = 0;
 
-		printf("1.HP UP / 2.MP UP / 3. ATK UP / 4.DEF UP / 5.Now Stat / 6. Level UP / 0. Exit \n 번호를 입력해 주세요\n 현재 보유하신 포션 갯수: HP_Potion : %d, MP_Potion : %d, Stat_Potion : %d\n", HPPotion, MPPotion, StatPotion);
+		printf("1.HP UP / 2.MP UP / 3. ATK UP / 4.DEF UP / 5.Now Stat / 6. Level UP / 7. Random Event / 0. Exit  \n 번호를 입력해 주세요\n 현재 보유하신 포션 갯수: HP_Potion : %d, MP_Potion : %d, Stat_Potion : %d\n 이벤트 가능 횟수 :%d\n", HPPotion, MPPotion, StatPotion , play);
 		scanf_s("%d", &Num);
 
 		switch (Num)
@@ -132,6 +132,60 @@ int main(void)
 			++StatPotion;
 			break;
 
+		case 7:
+			if (play > 0)
+			{
+				int Random = rand() % 5;
+				switch (Random)
+				{
+				case 0:
+					printf("가시를 밟아 HP가 5 감소하였습니다!\n");
+					Status[0] -= 5;
+					--play;
+
+					break;
+
+				case 1:
+					printf("포션들을 발견했습니다! 모든 포션의 갯수가 1씩 증가합니다.\n");
+					SetPotion(1, &HPPotion, &MPPotion, &StatPotion);
+					--play;
+
+					break;
+
+				case 2:
+					printf("기운이 빠집니다... MP가 10 감소하였습니다! \n");
+					Status[1] -= 10;
+					--play;
+
+					break;
+
+				case 3:
+					printf("운이 좋으시군요! 모든 스테이터스가 10씩 상승하고 레벨도 상승했습니다!!\n");
+					for (int i = 0; i < 4; i++)
+					{
+						Status[i] += 10;
+					}
+					++Level;
+					--play;
+
+					break;
+
+				case 4:
+					printf("아무 일도 일어나지 않았습니다....\n");
+
+					--play;
+
+					break;
+				}
+
+			}
+			else
+			{
+				printf("이벤트 가능 횟수를 초과하였습니다!! \n");
+			}
+			break;
+		
+		
 		case 0:
 			Choice = 0;
 			printf("프로그램을 종료합니다\n");
